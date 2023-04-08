@@ -1,5 +1,9 @@
-terraform.tfstate*
+terraform.secrets.auto.tfvars.json
+terraform.secrets.auto.tfvars
+secrets.tfvars
+secrets.tfvars.json
 .terraform/
-.xmtp/
 .terraform.*
+terraform.tfstate*
+.xmtp/
 .env

@@ -33,7 +33,7 @@ module "ecr_node_repo" {
 }
 
 module "cluster" {
-  source = "../../modules/k8s-cluster-aws"
+  source = "../k8s-cluster-aws"
 
   namespace = local.namespace
   stage     = local.stage
@@ -67,7 +67,7 @@ module "cluster" {
 }
 
 module "system" {
-  source     = "../../modules/cluster-system"
+  source     = "../cluster-system"
   depends_on = [module.cluster]
 
   namespace            = "xmtp-system"
@@ -80,7 +80,7 @@ module "system" {
 }
 
 module "tools" {
-  source     = "../../modules/cluster-tools"
+  source     = "../cluster-tools"
   depends_on = [module.system]
 
   namespace            = "xmtp-tools"
@@ -100,7 +100,7 @@ module "tools" {
 }
 
 module "nodes" {
-  source     = "../../modules/cluster-nodes"
+  source     = "../cluster-nodes"
   depends_on = [module.system]
 
   namespace                 = "xmtp-nodes"

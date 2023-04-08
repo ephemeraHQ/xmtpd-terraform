@@ -16,5 +16,6 @@ if [ -f "${apply_path}" ]; then
     cd "${plan_dir}"
     ./apply.sh
 else
+    "${script_dir}"/tf init -upgrade
     "${script_dir}"/tf apply -auto-approve
 fi

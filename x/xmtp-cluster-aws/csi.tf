@@ -6,7 +6,7 @@ locals {
 }
 
 module "argocd_app_aws_ebs_csi_driver" {
-  source = "../../modules/argocd-application"
+  source = "../argocd-application"
 
   argocd_namespace = module.system.namespace
   argocd_project   = module.system.argocd_project
