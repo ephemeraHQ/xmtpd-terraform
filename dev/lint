@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eou pipefail
 
+dev/lint-shellcheck
+
 terraform fmt -check -recursive
 
 tflint \
