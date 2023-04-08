@@ -9,7 +9,7 @@ locals {
 }
 
 module "cluster" {
-  source = "../../../x/xmtp-cluster-aws"
+  source = "../../../modules/xmtp-cluster-aws"
 
   namespace = "xmtp"
   stage     = "devnet"

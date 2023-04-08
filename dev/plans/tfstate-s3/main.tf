@@ -1,5 +1,5 @@
 module "tfstate" {
-  source = "../../../x/tfstate-s3"
+  source = "../../../modules/tfstate-s3"
 
   region = "us-east-1"
 }

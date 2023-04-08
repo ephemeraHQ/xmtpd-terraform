@@ -1,5 +1,5 @@
 module "cluster" {
-  source = "../../../x/xmtp-cluster-kind"
+  source = "../../../modules/xmtp-cluster-kind"
 
   name                 = "xmtp-devnet"
   node_container_image = "xmtp/xmtpd:latest"
