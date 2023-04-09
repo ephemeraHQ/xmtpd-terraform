@@ -11,6 +11,8 @@ locals {
 module "cluster" {
   source = "../../../modules/xmtp-cluster-aws"
 
+  // Combined as {namespace}-{stage}-{name} for sub-resources
+  // via https://github.com/cloudposse/terraform-null-label
   namespace = "xmtp"
   stage     = "devnet"
   name      = "aws"
