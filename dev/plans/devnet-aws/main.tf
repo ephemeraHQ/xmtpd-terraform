@@ -11,12 +11,7 @@ locals {
 module "cluster" {
   source = "../../../modules/xmtp-cluster-aws"
 
-  // Combined as {namespace}-{stage}-{name} for sub-resources
-  // via https://github.com/cloudposse/terraform-null-label
-  namespace = "xmtp"
-  stage     = "devnet"
-  name      = "aws"
-
+  name                         = "xmtp-devnet"
   region                       = local.region
   availability_zones           = ["us-east-2a", "us-east-2b"]
   vpc_cidr_block               = "172.16.0.0/16"

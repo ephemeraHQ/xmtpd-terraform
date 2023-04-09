@@ -8,13 +8,15 @@ locals {
   hostnames               = ["localhost", "xmtp.local"]
   node_api_http_port      = 5001
 
+  name = "${var.name}-${random_string.name_suffix.result}"
+
   chat_app_hostnames   = [for hostname in local.hostnames : "chat.${hostname}"]
   grafana_hostnames    = [for hostname in local.hostnames : "grafana.${hostname}"]
   jaeger_hostnames     = [for hostname in local.hostnames : "jaeger.${hostname}"]
   prometheus_hostnames = [for hostname in local.hostnames : "prometheus.${hostname}"]
 }
 
-resource "random_string" "k8s_cluster_name" {
+resource "random_string" "name_suffix" {
   length  = 5
   special = false
   upper   = false
@@ -23,7 +25,7 @@ resource "random_string" "k8s_cluster_name" {
 module "k8s" {
   source = "./k8s"
 
-  name            = "${var.name}-${random_string.k8s_cluster_name.result}"
+  name            = local.name
   kubeconfig_path = startswith(var.kubeconfig_path, "/") ? var.kubeconfig_path : abspath(var.kubeconfig_path)
   nodes = concat(
     [{

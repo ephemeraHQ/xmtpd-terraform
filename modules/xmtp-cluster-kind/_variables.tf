@@ -17,5 +17,5 @@ variable "node_keys" {
 variable "enable_chat_app" { default = true }
 variable "enable_monitoring" { default = true }
 variable "num_xmtp_node_pool_nodes" { default = 2 }
-variable "ingress_http_port" { default = 80 }
-variable "ingress_https_port" { default = 443 }
+variable "ingress_http_port" {}
+variable "ingress_https_port" {}

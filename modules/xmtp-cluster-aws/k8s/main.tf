@@ -1,15 +1,4 @@
-module "label" {
-  source  = "cloudposse/label/null"
-  version = "0.25.0"
-
-  attributes = local.attributes
-
-  context = module.this.context
-}
-
 locals {
-  attributes = ["cluster"]
-
   # The usage of the specific kubernetes.io/cluster/* resource tags below are required
   # for EKS and Kubernetes to discover and manage networking resources
   # https://aws.amazon.com/premiumsupport/knowledge-center/eks-vpc-subnet-discovery/
@@ -25,20 +14,27 @@ locals {
   }
 }
 
+module "label" {
+  source  = "cloudposse/label/null"
+  version = "0.25.0"
+
+  name = var.name
+}
+
 module "vpc" {
   source  = "cloudposse/vpc/aws"
   version = "1.1.0"
 
+  name       = var.name
   cidr_block = var.vpc_cidr_block
   tags       = local.tags
-
-  context = module.this.context
 }
 
 module "subnets" {
   source  = "cloudposse/dynamic-subnets/aws"
   version = "2.0.2"
 
+  name                            = var.name
   availability_zones              = var.availability_zones
   vpc_id                          = module.vpc.vpc_id
   igw_id                          = [module.vpc.igw_id]
@@ -48,14 +44,13 @@ module "subnets" {
   tags                            = local.tags
   public_subnets_additional_tags  = local.public_subnets_additional_tags
   private_subnets_additional_tags = local.private_subnets_additional_tags
-
-  context = module.this.context
 }
 
 module "eks_cluster" {
   source  = "cloudposse/eks-cluster/aws"
   version = "2.6.0"
 
+  name                         = var.name
   region                       = var.region
   vpc_id                       = module.vpc.vpc_id
   subnet_ids                   = concat(module.subnets.private_subnet_ids, module.subnets.public_subnet_ids)
@@ -64,7 +59,6 @@ module "eks_cluster" {
   oidc_provider_enabled        = var.oidc_provider_enabled
   enabled_cluster_log_types    = var.enabled_cluster_log_types
   cluster_log_retention_period = var.cluster_log_retention_period
-  cluster_attributes           = local.attributes
 
   cluster_encryption_config_enabled                         = var.cluster_encryption_config_enabled
   cluster_encryption_config_kms_key_id                      = var.cluster_encryption_config_kms_key_id
@@ -95,8 +89,6 @@ module "eks_cluster" {
   # has a cluster but the cluster was deleted by nightly cleanup, in order for
   # `terraform destroy` to succeed.
   apply_config_map_aws_auth = var.apply_config_map_aws_auth
-
-  context = module.this.context
 }
 
 module "eks_node_group" {
@@ -104,6 +96,7 @@ module "eks_node_group" {
   source  = "cloudposse/eks-node-group/aws"
   version = "2.4.0"
 
+  name              = "${var.name}-${var.node_pools[count.index].name}"
   subnet_ids        = module.subnets.private_subnet_ids
   cluster_name      = module.eks_cluster.eks_cluster_id
   instance_types    = var.node_pools[count.index].instance_types
@@ -114,6 +107,4 @@ module "eks_node_group" {
 
   # Prevent the node groups from being created before the Kubernetes aws-auth ConfigMap
   module_depends_on = module.eks_cluster.kubernetes_config_map_id
-
-  context = merge(module.this.context, { attributes : ["workers", var.node_pools[count.index].name] })
 }

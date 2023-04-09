@@ -26,7 +26,7 @@ resource "helm_release" "aws_ebs_csi_driver" {
 }
 
 resource "aws_iam_role" "ebs_csi_driver" {
-  name = "${local.fullname}-ebs-csi"
+  name = "${local.name}-ebs-csi"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

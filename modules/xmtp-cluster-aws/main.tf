@@ -5,10 +5,7 @@ locals {
   ingress_class_name  = "traefik"
   node_api_http_port  = 5001
 
-  namespace = var.namespace
-  stage     = var.stage
-  name      = var.name
-  fullname  = "${local.namespace}-${local.stage}-${local.name}"
+  name = "${var.name}-${random_string.name_suffix.result}"
 
   node_hostnames       = flatten([for node in var.nodes : [for hostname in var.hostnames : "${node.name}.${hostname}"]])
   chat_app_hostnames   = [for hostname in var.hostnames : "chat.${hostname}"]
@@ -19,25 +16,16 @@ locals {
 
 data "aws_caller_identity" "current" {}
 
-module "ecr_node_repo" {
-  source  = "cloudposse/ecr/aws"
-  version = "0.35.0"
-
-  namespace  = local.namespace
-  stage      = local.stage
-  name       = local.name
-  attributes = ["node"]
-
-  force_delete = true
+resource "random_string" "name_suffix" {
+  length  = 5
+  special = false
+  upper   = false
 }
 
 module "k8s" {
   source = "./k8s"
 
-  namespace = local.namespace
-  stage     = local.stage
-  name      = local.name
-
+  name                         = local.name
   region                       = var.region
   availability_zones           = var.availability_zones
   vpc_cidr_block               = var.vpc_cidr_block
