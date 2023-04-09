@@ -89,6 +89,10 @@ module "eks_cluster" {
   # has a cluster but the cluster was deleted by nightly cleanup, in order for
   # `terraform destroy` to succeed.
   apply_config_map_aws_auth = var.apply_config_map_aws_auth
+
+  // Override this since we need the derived EKS cluster tags to match exactly
+  // with the tags created and used above in locals.
+  cluster_attributes = []
 }
 
 module "eks_node_group" {
