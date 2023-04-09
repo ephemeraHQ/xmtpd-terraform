@@ -7,7 +7,7 @@ locals {
 
   namespace = var.namespace
   stage     = var.stage
-  name      = var.name
+  name      = "x${random_string.name.result}"
   fullname  = "${local.namespace}-${local.stage}-${local.name}"
 
   node_hostnames       = flatten([for node in var.nodes : [for hostname in var.hostnames : "${node.name}.${hostname}"]])
@@ -16,6 +16,12 @@ locals {
   grafana_hostnames    = [for hostname in var.hostnames : "grafana.${hostname}"]
   jaeger_hostnames     = [for hostname in var.hostnames : "jaeger.${hostname}"]
   prometheus_hostnames = [for hostname in var.hostnames : "prometheus.${hostname}"]
+}
+
+resource "random_string" "name" {
+  length  = 5
+  special = false
+  upper   = false
 }
 
 data "aws_caller_identity" "current" {}

@@ -17,12 +17,14 @@ terraform init -upgrade \
 
 # Create cluster and container registry.
 tf apply -auto-approve \
+    -target=module.cluster.random_string.name
+tf apply -auto-approve \
+    -target=module.cluster.random_string.name \
     -target=module.cluster.module.k8s \
     -target=module.cluster.module.ecr_node_repo
 tf apply -auto-approve \
     -target=module.cluster.module.system.kubernetes_namespace.system \
     -target=module.cluster.module.system.helm_release.argocd
-tf apply -auto-approve -refresh-only
 echo
 
 # Apply the rest.

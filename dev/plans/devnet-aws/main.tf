@@ -13,7 +13,6 @@ module "cluster" {
 
   namespace = "xmtp"
   stage     = "devnet"
-  name      = "aws"
 
   region                       = local.region
   availability_zones           = ["us-east-2a", "us-east-2b"]
