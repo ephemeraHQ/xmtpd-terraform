@@ -13,6 +13,7 @@ module "cluster" {
 
   namespace = "xmtp"
   stage     = "devnet"
+  name      = "aws"
 
   region                       = local.region
   availability_zones           = ["us-east-2a", "us-east-2b"]
@@ -21,8 +22,8 @@ module "cluster" {
   enabled_cluster_log_types    = ["audit"]
   cluster_log_retention_period = 7
   hostnames                    = ["snormore.dev"]
-  enable_chat_app              = true
-  enable_monitoring            = true
+  enable_chat_app              = false
+  enable_monitoring            = false
 
   nodes                = var.nodes
   node_keys            = var.node_keys

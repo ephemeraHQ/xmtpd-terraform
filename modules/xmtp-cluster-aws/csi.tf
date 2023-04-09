@@ -2,20 +2,16 @@
 
 locals {
   aws_account_id = data.aws_caller_identity.current.account_id
-  oidc_provider  = replace(module.cluster.eks_cluster_identity_oidc_issuer, "/(https://)/", "")
+  oidc_provider  = replace(module.k8s.eks_cluster_identity_oidc_issuer, "/(https://)/", "")
 }
 
-module "argocd_app_aws_ebs_csi_driver" {
-  source = "../argocd-application"
-
-  argocd_namespace = module.system.namespace
-  argocd_project   = module.system.argocd_project
-  name             = "aws-ebs-csi-driver"
-  namespace        = "kube-system"
-  repo_url         = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
-  chart            = "aws-ebs-csi-driver"
-  target_revision  = "2.17.2"
-  helm_values = [
+resource "helm_release" "aws_ebs_csi_driver" {
+  name       = "aws-ebs-csi-driver"
+  namespace  = "kube-system"
+  repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
+  version    = "2.17.2"
+  chart      = "aws-ebs-csi-driver"
+  values = [
     <<EOF
       controller:
         nodeSelector:

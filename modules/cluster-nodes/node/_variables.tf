@@ -26,5 +26,3 @@ variable "store_type" {
     error_message = "Recognized store types are mem, bolt or postgres"
   }
 }
-variable "argocd_project" {}
-variable "argocd_namespace" {}

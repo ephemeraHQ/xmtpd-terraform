@@ -1,16 +1,12 @@
-module "argocd_app_otelcollector" {
-  count  = var.enable_monitoring ? 1 : 0
-  source = "../argocd-application"
-
-  argocd_namespace = var.argocd_namespace
-  argocd_project   = module.argocd_project.name
-  name             = "otelcollector"
-  namespace        = var.namespace
-  wait             = var.wait_for_ready
-  repo_url         = "https://open-telemetry.github.io/opentelemetry-helm-charts"
-  chart            = "opentelemetry-collector"
-  target_revision  = "0.49.1"
-  helm_values = [
+resource "helm_release" "otelcollector" {
+  count      = var.enable_monitoring ? 1 : 0
+  wait       = var.wait_for_ready
+  name       = "otelcollector"
+  namespace  = var.namespace
+  repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
+  version    = "0.49.1"
+  chart      = "opentelemetry-collector"
+  values = [
     <<EOF
       mode: daemonset
       podAnnotations:

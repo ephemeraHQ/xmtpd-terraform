@@ -12,19 +12,6 @@ resource "kubernetes_namespace" "nodes" {
   }
 }
 
-module "argocd_project" {
-  source = "../argocd-project"
-
-  name      = var.argocd_project
-  namespace = var.argocd_namespace
-  destinations = [
-    {
-      server    = "https://kubernetes.default.svc"
-      namespace = local.namespace
-    }
-  ]
-}
-
 module "nodes_group1" {
   source     = "./node"
   depends_on = [kubernetes_namespace.nodes]
@@ -32,8 +19,6 @@ module "nodes_group1" {
 
   name                      = local.nodes_group1[count.index].name
   namespace                 = local.namespace
-  argocd_project            = var.argocd_project
-  argocd_namespace          = var.argocd_namespace
   p2p_persistent_peers      = local.nodes_group1[count.index].p2p_persistent_peers
   private_key               = var.node_keys[local.nodes_group1[count.index].name]
   container_image           = var.container_image
@@ -61,8 +46,6 @@ module "nodes_group2" {
 
   name                      = local.nodes_group2[count.index].name
   namespace                 = local.namespace
-  argocd_project            = var.argocd_project
-  argocd_namespace          = var.argocd_namespace
   p2p_persistent_peers      = local.nodes_group2[count.index].p2p_persistent_peers
   private_key               = var.node_keys[local.nodes_group2[count.index].name]
   container_image           = var.container_image

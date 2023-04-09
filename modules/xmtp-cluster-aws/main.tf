@@ -7,21 +7,14 @@ locals {
 
   namespace = var.namespace
   stage     = var.stage
-  name      = "x${random_string.name.result}"
+  name      = var.name
   fullname  = "${local.namespace}-${local.stage}-${local.name}"
 
   node_hostnames       = flatten([for node in var.nodes : [for hostname in var.hostnames : "${node.name}.${hostname}"]])
-  argocd_hostnames     = [for hostname in var.hostnames : "argo.${hostname}"]
   chat_app_hostnames   = [for hostname in var.hostnames : "chat.${hostname}"]
   grafana_hostnames    = [for hostname in var.hostnames : "grafana.${hostname}"]
   jaeger_hostnames     = [for hostname in var.hostnames : "jaeger.${hostname}"]
   prometheus_hostnames = [for hostname in var.hostnames : "prometheus.${hostname}"]
-}
-
-resource "random_string" "name" {
-  length  = 5
-  special = false
-  upper   = false
 }
 
 data "aws_caller_identity" "current" {}
@@ -38,7 +31,7 @@ module "ecr_node_repo" {
   force_delete = true
 }
 
-module "cluster" {
+module "k8s" {
   source = "../k8s-cluster-aws"
 
   namespace = local.namespace
@@ -55,7 +48,7 @@ module "cluster" {
   node_pools = [
     {
       name           = local.system_node_pool
-      instance_types = ["t3.medium"]
+      instance_types = ["t3.small"]
       desired_size   = 2
       labels = {
         (local.node_pool_label_key) = local.system_node_pool
@@ -74,13 +67,11 @@ module "cluster" {
 
 module "system" {
   source     = "../cluster-system"
-  depends_on = [module.cluster]
+  depends_on = [module.k8s]
 
   namespace            = "xmtp-system"
   node_pool_label_key  = local.node_pool_label_key
   node_pool            = local.system_node_pool
-  argocd_project       = "xmtp-system"
-  argocd_hostnames     = local.argocd_hostnames
   ingress_class_name   = local.ingress_class_name
   ingress_service_type = "LoadBalancer"
 }
@@ -92,8 +83,6 @@ module "tools" {
   namespace            = "xmtp-tools"
   node_pool_label_key  = local.node_pool_label_key
   node_pool            = local.system_node_pool
-  argocd_namespace     = module.system.namespace
-  argocd_project       = "xmtp-tools"
   ingress_class_name   = local.ingress_class_name
   wait_for_ready       = false
   enable_chat_app      = var.enable_chat_app
@@ -113,8 +102,6 @@ module "nodes" {
   container_image           = var.node_container_image
   node_pool_label_key       = local.node_pool_label_key
   node_pool                 = local.nodes_node_pool
-  argocd_namespace          = module.system.namespace
-  argocd_project            = "xmtp-nodes"
   nodes                     = var.nodes
   node_keys                 = var.node_keys
   ingress_class_name        = local.ingress_class_name

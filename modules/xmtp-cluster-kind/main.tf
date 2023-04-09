@@ -51,10 +51,8 @@ module "system" {
   namespace               = "xmtp-system"
   node_pool_label_key     = local.node_pool_label_key
   node_pool               = local.system_node_pool
-  argocd_project          = "xmtp-system"
   cluster_http_node_port  = local.cluster_http_node_port
   cluster_https_node_port = local.cluster_https_node_port
-  argocd_hostnames        = [for hostname in local.hostnames : "argo.${hostname}"]
   ingress_class_name      = local.ingress_class_name
   ingress_service_type    = "NodePort"
 }
@@ -66,8 +64,6 @@ module "tools" {
   namespace            = "xmtp-tools"
   node_pool_label_key  = local.node_pool_label_key
   node_pool            = local.system_node_pool
-  argocd_namespace     = module.system.namespace
-  argocd_project       = "xmtp-tools"
   ingress_class_name   = local.ingress_class_name
   wait_for_ready       = false
   enable_chat_app      = var.enable_chat_app
@@ -87,8 +83,6 @@ module "nodes" {
   container_image           = var.node_container_image
   node_pool_label_key       = local.node_pool_label_key
   node_pool                 = local.nodes_node_pool
-  argocd_namespace          = module.system.namespace
-  argocd_project            = "xmtp-nodes"
   nodes                     = var.nodes
   node_keys                 = var.node_keys
   ingress_class_name        = local.ingress_class_name

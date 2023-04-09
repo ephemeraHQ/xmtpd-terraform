@@ -3,8 +3,8 @@
 PLAN=$(source dev/.env.local; echo "$PLAN")
 plan_dir="${PWD}/dev/plans/${PLAN}"
 
-if [ -f "${plan_dir}"/kubeconfig.sh ]; then
-    "${plan_dir}"/kubeconfig.sh
+if [ -f "${plan_dir}"/update-kubeconfig.sh ]; then
+    "${plan_dir}"/update-kubeconfig.sh
 fi
 export KUBECONFIG="${plan_dir}/.xmtp/kubeconfig.yaml"
 

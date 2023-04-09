@@ -1,4 +1,5 @@
 resource "kubernetes_config_map" "xmtp-dashboards" {
+  count      = var.enable_monitoring ? 1 : 0
   depends_on = [kubernetes_namespace.tools]
   metadata {
     name      = "xmtp-dashboards"
@@ -9,19 +10,15 @@ resource "kubernetes_config_map" "xmtp-dashboards" {
   }
 }
 
-module "argocd_app_grafana" {
-  count  = var.enable_monitoring ? 1 : 0
-  source = "../argocd-application"
-
-  argocd_namespace = var.argocd_namespace
-  argocd_project   = module.argocd_project.name
-  name             = "grafana"
-  namespace        = var.namespace
-  wait             = var.wait_for_ready
-  repo_url         = "https://grafana.github.io/helm-charts"
-  chart            = "grafana"
-  target_revision  = "6.51.2"
-  helm_values = [
+resource "helm_release" "grafana" {
+  count      = var.enable_monitoring ? 1 : 0
+  wait       = var.wait_for_ready
+  name       = "grafana"
+  namespace  = var.namespace
+  repository = "https://grafana.github.io/helm-charts"
+  version    = "6.51.2"
+  chart      = "grafana"
+  values = [
     <<EOF
       nodeSelector:
         node-pool: ${var.node_pool}

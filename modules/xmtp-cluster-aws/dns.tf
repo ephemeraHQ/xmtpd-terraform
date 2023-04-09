@@ -20,15 +20,6 @@ resource "cloudflare_record" "node_hostnames" {
   proxied = true
 }
 
-resource "cloudflare_record" "argocd_hostnames" {
-  count   = length(local.argocd_hostnames)
-  zone_id = var.cloudflare_zone_id
-  name    = local.argocd_hostnames[count.index]
-  value   = local.ingress_public_hostname
-  type    = "CNAME"
-  proxied = true
-}
-
 resource "cloudflare_record" "grafana_hostnames" {
   count   = length(local.grafana_hostnames)
   zone_id = var.cloudflare_zone_id

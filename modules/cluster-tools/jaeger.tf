@@ -5,19 +5,15 @@ locals {
   jaeger_query_endpoint     = "jaeger-query:16686"
 }
 
-module "argocd_app_jaeger" {
-  count  = var.enable_monitoring ? 1 : 0
-  source = "../argocd-application"
-
-  argocd_namespace = var.argocd_namespace
-  argocd_project   = module.argocd_project.name
-  name             = "jaeger"
-  namespace        = var.namespace
-  wait             = var.wait_for_ready
-  repo_url         = "https://jaegertracing.github.io/helm-charts"
-  chart            = "jaeger"
-  target_revision  = "0.67.6"
-  helm_values = [
+resource "helm_release" "jaeger" {
+  count      = var.enable_monitoring ? 1 : 0
+  wait       = var.wait_for_ready
+  name       = "jaeger"
+  namespace  = var.namespace
+  repository = "https://jaegertracing.github.io/helm-charts"
+  version    = "0.67.6"
+  chart      = "jaeger"
+  values = [
     <<EOF
       allInOne:
         enabled: true

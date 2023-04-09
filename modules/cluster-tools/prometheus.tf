@@ -3,19 +3,15 @@ locals {
   prometheus_server_url      = "http://${local.prometheus_server_endpoint}"
 }
 
-module "argocd_app_prometheus" {
-  count  = var.enable_monitoring ? 1 : 0
-  source = "../argocd-application"
-
-  argocd_namespace = var.argocd_namespace
-  argocd_project   = module.argocd_project.name
-  name             = "prometheus"
-  namespace        = var.namespace
-  wait             = var.wait_for_ready
-  repo_url         = "https://prometheus-community.github.io/helm-charts"
-  chart            = "prometheus"
-  target_revision  = "19.7.2"
-  helm_values = [
+resource "helm_release" "prometheus" {
+  count      = var.enable_monitoring ? 1 : 0
+  wait       = var.wait_for_ready
+  name       = "prometheus"
+  namespace  = var.namespace
+  repository = "https://prometheus-community.github.io/helm-charts"
+  version    = "19.7.2"
+  chart      = "prometheus"
+  values = [
     <<EOF
       server:
         nodeSelector:

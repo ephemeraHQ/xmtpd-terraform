@@ -8,23 +8,6 @@ locals {
   namespace = kubernetes_namespace.tools.metadata[0].name
 }
 
-module "argocd_project" {
-  source = "../argocd-project"
-
-  name      = var.argocd_project
-  namespace = var.argocd_namespace
-  destinations = [
-    {
-      server    = "https://kubernetes.default.svc"
-      namespace = local.namespace
-    },
-    {
-      server    = "https://kubernetes.default.svc"
-      namespace = "kube-system"
-    },
-  ]
-}
-
 module "chat-app" {
   source = "./chat-app"
   count  = var.enable_chat_app ? 1 : 0
