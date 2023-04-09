@@ -22,8 +22,8 @@ module "cluster" {
   enabled_cluster_log_types    = ["audit"]
   cluster_log_retention_period = 7
   hostnames                    = ["snormore.dev"]
-  enable_chat_app              = false
-  enable_monitoring            = false
+  enable_chat_app              = true
+  enable_monitoring            = true
 
   nodes                = var.nodes
   node_keys            = var.node_keys
