@@ -1,4 +1,4 @@
-variable "name" {}
+variable "name_prefix" {}
 variable "kubeconfig_path" { default = ".xmtp/kubeconfig.yaml" }
 variable "node_container_image" {}
 variable "nodes" {

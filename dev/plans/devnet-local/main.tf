@@ -1,7 +1,7 @@
 module "cluster" {
   source = "../../../modules/xmtp-cluster-kind"
 
-  name                 = "xmtp-devnet"
+  name_prefix          = "xmtp-devnet"
   node_container_image = "xmtp/xmtpd:latest"
   enable_chat_app      = true
   enable_monitoring    = true

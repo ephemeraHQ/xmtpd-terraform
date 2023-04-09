@@ -8,7 +8,7 @@ locals {
   hostnames               = ["localhost", "xmtp.local"]
   node_api_http_port      = 5001
 
-  name = "${var.name}-${random_string.name_suffix.result}"
+  name = "${var.name_prefix}-${random_string.name_suffix.result}"
 
   chat_app_hostnames   = [for hostname in local.hostnames : "chat.${hostname}"]
   grafana_hostnames    = [for hostname in local.hostnames : "grafana.${hostname}"]

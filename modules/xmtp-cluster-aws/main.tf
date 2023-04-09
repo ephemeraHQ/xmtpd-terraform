@@ -5,7 +5,7 @@ locals {
   ingress_class_name  = "traefik"
   node_api_http_port  = 5001
 
-  name = "${var.name}-${random_string.name_suffix.result}"
+  name = "${var.name_prefix}-${random_string.name_suffix.result}"
 
   node_hostnames       = flatten([for node in var.nodes : [for hostname in var.hostnames : "${node.name}.${hostname}"]])
   chat_app_hostnames   = [for hostname in var.hostnames : "chat.${hostname}"]

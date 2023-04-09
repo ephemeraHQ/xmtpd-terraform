@@ -11,7 +11,7 @@ locals {
 module "cluster" {
   source = "../../../modules/xmtp-cluster-aws"
 
-  name                         = "xmtp-devnet"
+  name_prefix                  = "xmtp-devnet"
   region                       = local.region
   availability_zones           = ["us-east-2a", "us-east-2b"]
   vpc_cidr_block               = "172.16.0.0/16"
