@@ -13,7 +13,7 @@ resource "kubernetes_namespace" "nodes" {
 }
 
 module "nodes_group1" {
-  source     = "./node"
+  source     = "../../xmtp-node"
   depends_on = [kubernetes_namespace.nodes]
   count      = length(local.nodes_group1)
 
@@ -40,7 +40,7 @@ module "nodes_group1" {
 }
 
 module "nodes_group2" {
-  source     = "./node"
+  source     = "../../xmtp-node"
   depends_on = [kubernetes_namespace.nodes, module.nodes_group1]
   count      = length(local.nodes_group2)
 

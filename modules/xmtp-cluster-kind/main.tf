@@ -21,7 +21,7 @@ resource "random_string" "k8s_cluster_name" {
 }
 
 module "k8s" {
-  source = "../k8s-cluster-kind"
+  source = "./k8s"
 
   name            = "${var.name}-${random_string.k8s_cluster_name.result}"
   kubeconfig_path = startswith(var.kubeconfig_path, "/") ? var.kubeconfig_path : abspath(var.kubeconfig_path)
@@ -45,7 +45,7 @@ module "k8s" {
 }
 
 module "system" {
-  source     = "../cluster-system"
+  source     = "../xmtp-cluster/system"
   depends_on = [module.k8s]
 
   namespace               = "xmtp-system"
@@ -58,7 +58,7 @@ module "system" {
 }
 
 module "tools" {
-  source     = "../cluster-tools"
+  source     = "../xmtp-cluster/tools"
   depends_on = [module.system]
 
   namespace            = "xmtp-tools"
@@ -76,7 +76,7 @@ module "tools" {
 }
 
 module "nodes" {
-  source     = "../cluster-nodes"
+  source     = "../xmtp-cluster/nodes"
   depends_on = [module.system]
 
   namespace                 = "xmtp-nodes"
