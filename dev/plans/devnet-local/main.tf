@@ -10,8 +10,8 @@ module "cluster" {
 
   nodes = [
     {
-      name = "node1"
-      node_id = "12D3KooWQTBzH9ow24ALRi5YEhp2htn2ss7XV1es98hbq5enCjUb"
+      name               = "node1"
+      node_id            = "12D3KooWQTBzH9ow24ALRi5YEhp2htn2ss7XV1es98hbq5enCjUb"
       p2p_public_address = "/dns4/node1/tcp/9000/p2p/12D3KooWQTBzH9ow24ALRi5YEhp2htn2ss7XV1es98hbq5enCjUb"
       p2p_persistent_peers = [
         "/dns4/node2/tcp/9000/p2p/12D3KooWFfse73aHJGBkZpUVymoozyMXKmBH7f4Y6kKcp4rviTyY",
@@ -20,8 +20,8 @@ module "cluster" {
       store_type = "postgres"
     },
     {
-      name = "node2"
-      node_id = "12D3KooWFfse73aHJGBkZpUVymoozyMXKmBH7f4Y6kKcp4rviTyY"
+      name               = "node2"
+      node_id            = "12D3KooWFfse73aHJGBkZpUVymoozyMXKmBH7f4Y6kKcp4rviTyY"
       p2p_public_address = "/dns4/node2/tcp/9000/p2p/12D3KooWFfse73aHJGBkZpUVymoozyMXKmBH7f4Y6kKcp4rviTyY"
       p2p_persistent_peers = [
         "/dns4/node1/tcp/9000/p2p/12D3KooWQTBzH9ow24ALRi5YEhp2htn2ss7XV1es98hbq5enCjUb",
@@ -30,8 +30,8 @@ module "cluster" {
       store_type = "bolt"
     },
     {
-      name = "node3"
-      node_id = "12D3KooWQcjJL43hPyGHGQx3RCrQC2HLxVyvMUH8GoAL2pqR7wZv"
+      name               = "node3"
+      node_id            = "12D3KooWQcjJL43hPyGHGQx3RCrQC2HLxVyvMUH8GoAL2pqR7wZv"
       p2p_public_address = "/dns4/node3/tcp/9000/p2p/12D3KooWQcjJL43hPyGHGQx3RCrQC2HLxVyvMUH8GoAL2pqR7wZv"
       p2p_persistent_peers = [
         "/dns4/node1/tcp/9000/p2p/12D3KooWQTBzH9ow24ALRi5YEhp2htn2ss7XV1es98hbq5enCjUb",
