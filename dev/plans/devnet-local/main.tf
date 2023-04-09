@@ -5,8 +5,8 @@ module "cluster" {
   node_container_image = "xmtp/xmtpd:latest"
   enable_chat_app      = true
   enable_monitoring    = true
-  ingress_http_port    = 8080
-  ingress_https_port   = 8443
+  ingress_http_port    = 80
+  ingress_https_port   = 443
 
   nodes = [
     {
