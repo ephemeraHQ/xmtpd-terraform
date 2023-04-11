@@ -76,7 +76,7 @@ module "tools" {
   wait_for_ready           = false
   enable_chat_app          = var.enable_chat_app
   enable_monitoring        = var.enable_monitoring
-  public_api_url           = "http://${var.hostnames[0]}"
+  public_api_url           = "https://${var.hostnames[0]}"
   chat_app_hostnames       = local.chat_app_hostnames
   grafana_hostnames        = local.grafana_hostnames
   jaeger_hostnames         = local.jaeger_hostnames
