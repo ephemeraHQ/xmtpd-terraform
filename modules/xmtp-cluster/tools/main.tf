@@ -18,4 +18,5 @@ module "chat-app" {
   api_url               = var.public_api_url
   hostnames             = var.chat_app_hostnames
   ingress_class_name    = var.ingress_class_name
+  container_image       = var.chat_app_container_image
 }

@@ -68,18 +68,19 @@ module "tools" {
   source     = "../xmtp-cluster/tools"
   depends_on = [module.system]
 
-  namespace            = "xmtp-tools"
-  node_pool_label_key  = local.node_pool_label_key
-  node_pool            = local.system_node_pool
-  ingress_class_name   = local.ingress_class_name
-  wait_for_ready       = false
-  enable_chat_app      = var.enable_chat_app
-  enable_monitoring    = var.enable_monitoring
-  public_api_url       = "http://${var.hostnames[0]}"
-  chat_app_hostnames   = local.chat_app_hostnames
-  grafana_hostnames    = local.grafana_hostnames
-  jaeger_hostnames     = local.jaeger_hostnames
-  prometheus_hostnames = local.prometheus_hostnames
+  namespace                = "xmtp-tools"
+  chat_app_container_image = var.chat_app_container_image
+  node_pool_label_key      = local.node_pool_label_key
+  node_pool                = local.system_node_pool
+  ingress_class_name       = local.ingress_class_name
+  wait_for_ready           = false
+  enable_chat_app          = var.enable_chat_app
+  enable_monitoring        = var.enable_monitoring
+  public_api_url           = "http://${var.hostnames[0]}"
+  chat_app_hostnames       = local.chat_app_hostnames
+  grafana_hostnames        = local.grafana_hostnames
+  jaeger_hostnames         = local.jaeger_hostnames
+  prometheus_hostnames     = local.prometheus_hostnames
 }
 
 module "nodes" {
