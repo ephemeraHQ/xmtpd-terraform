@@ -108,65 +108,31 @@
         {
           "datasource": "Prometheus",
           "editorMode": "code",
-          "expr": "sum(increase(xmtpd_api_requests[$__rate_interval])) by (api_app, grpc_method, grpc_error_code)",
+          "expr": "sum(increase(xmtpd_api_request_duration_us_count{grpc_method=~\"$grpc_method\"}[$__rate_interval])) by (host_name, grpc_method, grpc_error_code)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "API requests by k8s node, grpc method and grpc error code",
+      "title": "API requests",
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "xmtpd-metrics"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
             }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
           }
         },
         "overrides": []
@@ -178,34 +144,64 @@
         "y": 9
       },
       "id": 4,
+      "maxDataPoints": 100,
       "options": {
+        "calculate": false,
+        "cellGap": 1,
+        "color": {
+          "exponent": 0.5,
+          "fill": "dark-orange",
+          "mode": "scheme",
+          "reverse": false,
+          "scale": "exponential",
+          "scheme": "Oranges",
+          "steps": 64
+        },
+        "exemplars": {
+          "color": "rgba(255,0,255,0.7)"
+        },
+        "filterValues": {
+          "le": 1e-9
+        },
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
+          "show": true
+        },
+        "rowsFrame": {
+          "layout": "auto",
+          "value": "Count"
         },
         "tooltip": {
-          "mode": "single",
-          "sort": "none"
+          "show": true,
+          "yHistogram": false
+        },
+        "yAxis": {
+          "axisPlacement": "left",
+          "reverse": false,
+          "unit": "µs"
         }
       },
+      "pluginVersion": "9.3.8",
       "targets": [
         {
           "datasource": "Prometheus",
           "editorMode": "code",
-          "expr": "sum(rate(xmtpd_api_requests[$__rate_interval])) by (host_name, api_app, api_client)",
+          "exemplar": false,
+          "expr": "sum by (le) (increase(xmtpd_api_request_duration_us_bucket{grpc_method=~\"$grpc_method\"}[$__rate_interval]))",
+          "format": "heatmap",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "B"
         }
       ],
-      "title": "API requests by k8s node, api app, and api client",
-      "type": "timeseries"
+      "title": "API request durations",
+      "type": "heatmap"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "xmtpd-metrics"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -256,7 +252,7 @@
           "datasource": "Prometheus",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(rate(xmtpd_api_requests[$__rate_interval])) by(host_name)",
+          "expr": "sum(rate(xmtpd_api_request_duration_us_count{grpc_method=~\"$grpc_method\"}[$__rate_interval])) by(host_name)",
           "format": "time_series",
           "instant": false,
           "legendFormat": "__auto",
@@ -290,16 +286,47 @@
     "xmtpd"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "Publish"
+          ],
+          "value": [
+            "Publish"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "xmtpd-metrics"
+        },
+        "definition": "label_values(xmtpd_api_request_duration_us_bucket, grpc_method)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": true,
+        "name": "grpc_method",
+        "options": [],
+        "query": {
+          "query": "label_values(xmtpd_api_request_duration_us_bucket, grpc_method)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "XMTP Network API",
   "uid": "nhGacz54k",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
