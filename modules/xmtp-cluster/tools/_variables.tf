@@ -10,3 +10,4 @@ variable "grafana_hostnames" { type = list(string) }
 variable "jaeger_hostnames" { type = list(string) }
 variable "prometheus_hostnames" { type = list(string) }
 variable "public_api_url" {}
+variable "chat_app_container_image" {}
