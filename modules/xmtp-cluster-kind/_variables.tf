@@ -1,7 +1,7 @@
 variable "name_prefix" {}
 variable "kubeconfig_path" { default = ".xmtp/kubeconfig.yaml" }
 variable "node_container_image" {}
-variable "chat_app_container_image" { default = "xmtplabs/xmtp-inbox-web:latest" }
+variable "chat_app_container_image" { default = "snormorexmtp/xmtp-inbox-web:latest" }
 variable "nodes" {
   type = list(object({
     name                 = string
