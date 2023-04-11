@@ -50,7 +50,7 @@ resource "kubernetes_deployment" "deployment" {
             value = var.container_port
           }
           env {
-            name  = "NEXT_PUBLIC_XMTP_API_URL"
+            name  = "XMTP_API_URL"
             value = var.api_url
           }
           readiness_probe {
