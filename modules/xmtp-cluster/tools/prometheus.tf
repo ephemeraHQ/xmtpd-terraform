@@ -1,6 +1,7 @@
 locals {
   prometheus_server_endpoint = "prometheus-server:80"
   prometheus_server_url      = "http://${local.prometheus_server_endpoint}"
+  node_admin_endpoints       = [for node in var.node_hostnames_internal : "${node}:${var.node_admin_port}"]
 }
 
 resource "helm_release" "prometheus" {
@@ -36,6 +37,10 @@ resource "helm_release" "prometheus" {
       prometheus-pushgateway:
         nodeSelector:
           node-pool: ${var.node_pool}
+      extraScrapeConfigs: |
+        - job_name: xmtpd
+          static_configs:
+          - targets: ${jsonencode(local.node_admin_endpoints)}
     EOF
   ]
 }

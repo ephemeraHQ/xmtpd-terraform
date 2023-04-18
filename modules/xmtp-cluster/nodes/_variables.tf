@@ -24,3 +24,4 @@ variable "container_storage_request" {}
 variable "container_cpu_request" {}
 variable "one_instance_per_k8s_node" { type = bool }
 variable "debug" { type = bool }
+variable "admin_port" { type = number }
