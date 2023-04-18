@@ -30,7 +30,7 @@ variable "cluster_log_retention_period" {
 }
 
 variable "node_container_image" {}
-variable "chat_app_container_image" { default = "snormorexmtp/xmtp-inbox-web:latest" }
+variable "chat_app_container_image" { default = "xmtplabs/xmtp-inbox-web:latest" }
 variable "nodes" {
   type = list(object({
     name                 = string
