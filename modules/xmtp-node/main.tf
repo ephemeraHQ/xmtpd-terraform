@@ -55,8 +55,8 @@ resource "kubernetes_service" "service" {
       port = var.p2p_port
     }
     port {
-      name = "metrics"
-      port = var.metrics_port
+      name = "admin"
+      port = var.admin_port
     }
   }
 }
@@ -153,6 +153,7 @@ resource "kubernetes_stateful_set" "statefulset" {
               "--p2p.port=${var.p2p_port}",
               "--api.http-port=${var.api_http_port}",
               "--api.grpc-port=${var.api_grpc_port}",
+              "--admin.port=${var.admin_port}",
               "--store.type=${var.store_type}",
             ],
             [for peer in var.p2p_persistent_peers : "--p2p.persistent-peer=${peer}"],

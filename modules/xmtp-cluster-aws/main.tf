@@ -4,14 +4,16 @@ locals {
   nodes_node_pool     = "xmtp-nodes"
   ingress_class_name  = "traefik"
   node_api_http_port  = 5001
+  node_admin_port     = 8009
 
   name = "${var.name_prefix}-${random_string.name_suffix.result}"
 
-  node_hostnames       = flatten([for node in var.nodes : [for hostname in var.hostnames : "${node.name}.${hostname}"]])
-  chat_app_hostnames   = [for hostname in var.hostnames : "chat.${hostname}"]
-  grafana_hostnames    = [for hostname in var.hostnames : "grafana.${hostname}"]
-  jaeger_hostnames     = [for hostname in var.hostnames : "jaeger.${hostname}"]
-  prometheus_hostnames = [for hostname in var.hostnames : "prometheus.${hostname}"]
+  node_hostnames_internal = [for node in var.nodes : "${node.name}.xmtp-nodes"]
+  node_hostnames          = flatten([for node in var.nodes : [for hostname in var.hostnames : "${node.name}.${hostname}"]])
+  chat_app_hostnames      = [for hostname in var.hostnames : "chat.${hostname}"]
+  grafana_hostnames       = [for hostname in var.hostnames : "grafana.${hostname}"]
+  jaeger_hostnames        = [for hostname in var.hostnames : "jaeger.${hostname}"]
+  prometheus_hostnames    = [for hostname in var.hostnames : "prometheus.${hostname}"]
 }
 
 data "aws_caller_identity" "current" {}
@@ -77,6 +79,8 @@ module "tools" {
   enable_chat_app          = var.enable_chat_app
   enable_monitoring        = var.enable_monitoring
   public_api_url           = "https://${var.hostnames[0]}"
+  node_admin_port          = local.node_admin_port
+  node_hostnames_internal  = local.node_hostnames_internal
   chat_app_hostnames       = local.chat_app_hostnames
   grafana_hostnames        = local.grafana_hostnames
   jaeger_hostnames         = local.jaeger_hostnames
@@ -102,4 +106,5 @@ module "nodes" {
   debug                     = true
   wait_for_ready            = false
   one_instance_per_k8s_node = false
+  admin_port                = local.node_admin_port
 }

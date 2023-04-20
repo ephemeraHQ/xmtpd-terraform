@@ -7,13 +7,15 @@ locals {
   cluster_https_node_port = 32443
   hostnames               = ["localhost", "xmtp.local"]
   node_api_http_port      = 5001
+  node_admin_port         = 8009
 
   name = "${var.name_prefix}-${random_string.name_suffix.result}"
 
-  chat_app_hostnames   = [for hostname in local.hostnames : "chat.${hostname}"]
-  grafana_hostnames    = [for hostname in local.hostnames : "grafana.${hostname}"]
-  jaeger_hostnames     = [for hostname in local.hostnames : "jaeger.${hostname}"]
-  prometheus_hostnames = [for hostname in local.hostnames : "prometheus.${hostname}"]
+  node_hostnames_internal = [for node in var.nodes : "${node.name}.xmtp-nodes"]
+  chat_app_hostnames      = [for hostname in local.hostnames : "chat.${hostname}"]
+  grafana_hostnames       = [for hostname in local.hostnames : "grafana.${hostname}"]
+  jaeger_hostnames        = [for hostname in local.hostnames : "jaeger.${hostname}"]
+  prometheus_hostnames    = [for hostname in local.hostnames : "prometheus.${hostname}"]
 }
 
 resource "random_string" "name_suffix" {
@@ -72,6 +74,8 @@ module "tools" {
   enable_chat_app          = var.enable_chat_app
   enable_monitoring        = var.enable_monitoring
   public_api_url           = "http://${local.hostnames[0]}"
+  node_admin_port          = local.node_admin_port
+  node_hostnames_internal  = local.node_hostnames_internal
   chat_app_hostnames       = local.chat_app_hostnames
   grafana_hostnames        = local.grafana_hostnames
   jaeger_hostnames         = local.jaeger_hostnames
@@ -97,4 +101,5 @@ module "nodes" {
   debug                     = true
   wait_for_ready            = false
   one_instance_per_k8s_node = false
+  admin_port                = local.node_admin_port
 }
