@@ -85,6 +85,8 @@ module "tools" {
   grafana_hostnames        = local.grafana_hostnames
   jaeger_hostnames         = local.jaeger_hostnames
   prometheus_hostnames     = local.prometheus_hostnames
+  datadog_api_key          = var.datadog_api_key
+  datadog_cluster_name     = var.datadog_cluster_name
 }
 
 module "nodes" {
