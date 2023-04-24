@@ -49,3 +49,8 @@ variable "enable_monitoring" { default = true }
 variable "hostnames" { type = list(string) }
 variable "cloudflare_api_token" { sensitive = true }
 variable "cloudflare_zone_id" {}
+variable "datadog_api_key" {
+  type      = string
+  sensitive = true
+}
+variable "datadog_cluster_name" { type = string }

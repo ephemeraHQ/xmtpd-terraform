@@ -5,6 +5,8 @@ variable "ingress_class_name" {}
 variable "wait_for_ready" {}
 variable "enable_chat_app" { type = bool }
 variable "enable_monitoring" { type = bool }
+variable "datadog_api_key" { default = "" }
+variable "datadog_cluster_name" { default = "" }
 variable "node_hostnames_internal" { type = list(string) }
 variable "chat_app_hostnames" { type = list(string) }
 variable "grafana_hostnames" { type = list(string) }

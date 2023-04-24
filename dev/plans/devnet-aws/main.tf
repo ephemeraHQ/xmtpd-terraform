@@ -27,4 +27,6 @@ module "cluster" {
   node_container_image = var.node_container_image
   cloudflare_api_token = var.cloudflare_api_token
   cloudflare_zone_id   = var.cloudflare_zone_id
+  datadog_api_key      = var.datadog_api_key
+  datadog_cluster_name = var.datadog_cluster_name
 }

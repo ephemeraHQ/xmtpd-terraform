@@ -3,6 +3,27 @@ locals {
     "app.kubernetes.io/part-of" = "xmtp-nodes"
     "app.kubernetes.io/name" : var.name
   }
+  # For the parameter definitions see
+  # https://github.com/DataDog/integrations-core/blob/master/datadog_checks_dev/datadog_checks/dev/tooling/templates/configuration/instances/openmetrics.yaml
+  annotations = {
+    "ad.datadoghq.com/node.checks" = <<EOT
+      {
+        "openmetrics": {
+          "init_config": {},
+          "instances": [
+            {
+              "openmetrics_endpoint": "http://%%host%%:%%port_admin%%/metrics",
+              "namespace": "xmtpd2",
+              "raw_metric_prefix": "xmtpd_",
+              "metrics": [".*"],
+              "tag_by_endpoint": false,
+              "histogram_buckets_as_distributions": true
+            }
+          ]
+        }
+      }          
+    EOT
+  }
 }
 
 resource "kubernetes_ingress_v1" "ingress" {
@@ -90,7 +111,8 @@ resource "kubernetes_stateful_set" "statefulset" {
     replicas     = 1
     template {
       metadata {
-        labels = local.labels
+        labels      = local.labels
+        annotations = local.annotations
       }
       spec {
         termination_grace_period_seconds = 10
@@ -124,6 +146,10 @@ resource "kubernetes_stateful_set" "statefulset" {
           port {
             name           = "p2p"
             container_port = var.p2p_port
+          }
+          port {
+            name           = "admin"
+            container_port = var.admin_port
           }
           dynamic "volume_mount" {
             for_each = var.store_type == "bolt" ? [1] : []
