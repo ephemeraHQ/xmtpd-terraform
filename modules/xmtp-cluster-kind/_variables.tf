@@ -20,3 +20,6 @@ variable "enable_monitoring" { default = true }
 variable "num_xmtp_node_pool_nodes" { default = 2 }
 variable "ingress_http_port" {}
 variable "ingress_https_port" {}
+variable "enable_e2e" { default = true }
+variable "e2e_container_image" { default = "xmtp/xmtpd-e2e:latest" }
+variable "e2e_replicas" { default = 1 }
