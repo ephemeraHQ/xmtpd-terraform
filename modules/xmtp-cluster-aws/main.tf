@@ -34,6 +34,7 @@ module "k8s" {
   kubernetes_version           = var.kubernetes_version
   enabled_cluster_log_types    = var.enabled_cluster_log_types
   cluster_log_retention_period = var.cluster_log_retention_period
+  map_additional_iam_users     = var.eks_map_additional_iam_users
 
   node_pools = [
     {

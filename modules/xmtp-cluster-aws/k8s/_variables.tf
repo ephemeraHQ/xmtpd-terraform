@@ -104,3 +104,13 @@ variable "apply_config_map_aws_auth" {
   default     = true
   description = "Whether to apply the ConfigMap to allow worker nodes to join the EKS cluster and allow additional users, accounts and roles to acces the cluster"
 }
+
+variable "map_additional_iam_users" {
+  type = list(object({
+    userarn  = string
+    username = string
+    groups   = list(string)
+  }))
+  default     = []
+  description = "Additional IAM users to add to config-map-aws-auth ConfigMap"
+}
