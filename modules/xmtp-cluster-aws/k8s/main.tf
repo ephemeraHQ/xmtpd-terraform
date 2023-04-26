@@ -93,6 +93,9 @@ module "eks_cluster" {
   // Override this since we need the derived EKS cluster tags to match exactly
   // with the tags created and used above in locals.
   cluster_attributes = []
+
+  // Map additional IAM users to in-cluster auth groups.
+  map_additional_iam_users = var.map_additional_iam_users
 }
 
 module "eks_node_group" {

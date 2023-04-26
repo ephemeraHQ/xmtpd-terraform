@@ -57,3 +57,13 @@ variable "datadog_cluster_name" { default = "" }
 variable "enable_e2e" { default = true }
 variable "e2e_container_image" { default = "xmtp/xmtpd-e2e:latest" }
 variable "e2e_replicas" { default = 1 }
+
+variable "eks_map_additional_iam_users" {
+  type = list(object({
+    userarn  = string
+    username = string
+    groups   = list(string)
+  }))
+  default     = []
+  description = "Additional IAM users to add to config-map-aws-auth ConfigMap"
+}
