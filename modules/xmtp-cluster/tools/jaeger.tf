@@ -9,7 +9,7 @@ resource "helm_release" "jaeger" {
   count      = var.enable_monitoring ? 1 : 0
   wait       = var.wait_for_ready
   name       = "jaeger"
-  namespace  = var.namespace
+  namespace  = local.namespace
   repository = "https://jaegertracing.github.io/helm-charts"
   version    = "0.67.6"
   chart      = "jaeger"

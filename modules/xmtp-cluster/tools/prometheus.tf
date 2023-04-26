@@ -8,7 +8,7 @@ resource "helm_release" "prometheus" {
   count      = var.enable_monitoring ? 1 : 0
   wait       = var.wait_for_ready
   name       = "prometheus"
-  namespace  = var.namespace
+  namespace  = local.namespace
   repository = "https://prometheus-community.github.io/helm-charts"
   version    = "19.7.2"
   chart      = "prometheus"
