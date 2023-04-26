@@ -3,7 +3,7 @@ resource "kubernetes_config_map" "xmtp-dashboards" {
   depends_on = [kubernetes_namespace.tools]
   metadata {
     name      = "xmtp-dashboards"
-    namespace = var.namespace
+    namespace = local.namespace
   }
   data = {
     "xmtp-network-api.json"  = file("${path.module}/grafana/dashboards/xmtp-network-api.json")
@@ -15,7 +15,7 @@ resource "helm_release" "grafana" {
   count      = var.enable_monitoring ? 1 : 0
   wait       = var.wait_for_ready
   name       = "grafana"
-  namespace  = var.namespace
+  namespace  = local.namespace
   repository = "https://grafana.github.io/helm-charts"
   version    = "6.51.2"
   chart      = "grafana"

@@ -2,7 +2,7 @@ resource "helm_release" "otelcollector" {
   count      = var.enable_monitoring ? 1 : 0
   wait       = var.wait_for_ready
   name       = "otelcollector"
-  namespace  = var.namespace
+  namespace  = local.namespace
   repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
   version    = "0.49.1"
   chart      = "opentelemetry-collector"
