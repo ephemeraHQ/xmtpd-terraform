@@ -72,13 +72,16 @@ module "tools" {
 
   namespace                = "xmtp-tools"
   chat_app_container_image = var.chat_app_container_image
+  e2e_container_image      = var.e2e_container_image
   node_pool_label_key      = local.node_pool_label_key
   node_pool                = local.system_node_pool
   ingress_class_name       = local.ingress_class_name
   wait_for_ready           = false
   enable_chat_app          = var.enable_chat_app
   enable_monitoring        = var.enable_monitoring
+  enable_e2e               = var.enable_e2e
   public_api_url           = "https://${var.hostnames[0]}"
+  node_container_port      = local.node_api_http_port
   node_admin_port          = local.node_admin_port
   node_hostnames_internal  = local.node_hostnames_internal
   chat_app_hostnames       = local.chat_app_hostnames
@@ -87,6 +90,7 @@ module "tools" {
   prometheus_hostnames     = local.prometheus_hostnames
   datadog_api_key          = var.datadog_api_key
   datadog_cluster_name     = var.datadog_cluster_name
+  e2e_replicas             = var.e2e_replicas
 }
 
 module "nodes" {

@@ -13,5 +13,9 @@ variable "grafana_hostnames" { type = list(string) }
 variable "jaeger_hostnames" { type = list(string) }
 variable "prometheus_hostnames" { type = list(string) }
 variable "node_admin_port" { type = number }
+variable "node_container_port" { type = number }
 variable "public_api_url" {}
 variable "chat_app_container_image" {}
+variable "enable_e2e" { type = bool }
+variable "e2e_container_image" {}
+variable "e2e_replicas" { type = number }

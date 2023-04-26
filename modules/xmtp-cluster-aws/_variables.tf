@@ -54,3 +54,6 @@ variable "datadog_api_key" {
   sensitive = true
 }
 variable "datadog_cluster_name" { type = string }
+variable "enable_e2e" { default = true }
+variable "e2e_container_image" { default = "xmtp/xmtpd-e2e:latest" }
+variable "e2e_replicas" { default = 1 }
