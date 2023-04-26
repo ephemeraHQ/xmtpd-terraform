@@ -4,23 +4,20 @@ terraform {
   }
 }
 
-locals {
-  region = "us-east-2"
-}
-
 module "cluster" {
   source = "../../../modules/xmtp-cluster-aws"
 
   name_prefix                  = "xmtp-devnet"
-  region                       = local.region
-  availability_zones           = ["us-east-2a", "us-east-2b"]
+  region                       = var.region
+  availability_zones           = var.availability_zones
   vpc_cidr_block               = "172.16.0.0/16"
-  kubernetes_version           = "1.25"
+  kubernetes_version           = var.kubernetes_version
   enabled_cluster_log_types    = ["audit"]
   cluster_log_retention_period = 7
-  hostnames                    = ["snormore.dev"]
-  enable_chat_app              = true
-  enable_monitoring            = true
+  hostnames                    = var.hostnames
+  enable_chat_app              = var.enable_chat_app
+  enable_monitoring            = var.enable_monitoring
+  chat_app_container_image     = var.chat_app_container_image
 
   nodes                = var.nodes
   node_keys            = var.node_keys

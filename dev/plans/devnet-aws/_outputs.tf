@@ -1,5 +1,5 @@
 output "region" {
-  value       = local.region
+  value       = var.region
   description = "AWS region"
 }
 

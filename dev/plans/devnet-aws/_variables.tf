@@ -1,4 +1,11 @@
+variable "region" {}
+variable "availability_zones" { type = list(string) }
+variable "hostnames" { type = list(string) }
 variable "node_container_image" { default = "xmtp/xmtpd:latest" }
+variable "chat_app_container_image" { default = "xmtp-labs/xmtp-inbox-web:latest" }
+variable "kubernetes_version" { default = "1.26" }
+variable "enable_chat_app" { default = true }
+variable "enable_monitoring" { default = true }
 variable "nodes" {
   type = list(object({
     name                 = string
