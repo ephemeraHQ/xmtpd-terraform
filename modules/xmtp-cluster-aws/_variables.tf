@@ -67,3 +67,11 @@ variable "eks_map_additional_iam_users" {
   default     = []
   description = "Additional IAM users to add to config-map-aws-auth ConfigMap"
 }
+
+variable "system_node_pool_instance_type" {
+  default = "t3.small"
+}
+
+variable "nodes_node_pool_instance_type" {
+  default = "t3.small"
+}

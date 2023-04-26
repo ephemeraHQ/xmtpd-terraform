@@ -39,7 +39,7 @@ module "k8s" {
   node_pools = [
     {
       name           = local.system_node_pool
-      instance_types = ["t3.small"]
+      instance_types = [var.system_node_pool_instance_type]
       desired_size   = 2
       labels = {
         (local.node_pool_label_key) = local.system_node_pool
@@ -47,7 +47,7 @@ module "k8s" {
     },
     {
       name           = local.nodes_node_pool
-      instance_types = ["t3.small"]
+      instance_types = [var.nodes_node_pool_instance_type]
       desired_size   = 2
       labels = {
         (local.node_pool_label_key) = local.nodes_node_pool
