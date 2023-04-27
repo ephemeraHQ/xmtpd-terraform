@@ -11,6 +11,8 @@ resource "helm_release" "metrics_server" {
       args:
         - --kubelet-insecure-tls
         - --kubelet-preferred-address-types=InternalIP
+      nodeSelector:
+        ${var.node_pool_label_key}: ${var.node_pool}
     EOF
   ]
 }
