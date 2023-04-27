@@ -29,15 +29,6 @@ resource "cloudflare_record" "grafana_hostnames" {
   proxied = true
 }
 
-resource "cloudflare_record" "jaeger_hostnames" {
-  count   = length(local.jaeger_hostnames)
-  zone_id = var.cloudflare_zone_id
-  name    = local.jaeger_hostnames[count.index]
-  value   = local.ingress_public_hostname
-  type    = "CNAME"
-  proxied = true
-}
-
 resource "cloudflare_record" "prometheus_hostnames" {
   count   = length(local.prometheus_hostnames)
   zone_id = var.cloudflare_zone_id

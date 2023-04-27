@@ -163,14 +163,6 @@ resource "kubernetes_stateful_set" "statefulset" {
               name = kubernetes_secret.secret.metadata[0].name
             }
           }
-          env {
-            name = "OTEL_COLLECTOR_ADDRESS"
-            value_from {
-              field_ref {
-                field_path = "status.hostIP"
-              }
-            }
-          }
           command = concat(
             [
               "xmtpd",

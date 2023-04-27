@@ -14,7 +14,6 @@ locals {
   node_hostnames_internal = [for node in var.nodes : "${node.name}.xmtp-nodes"]
   chat_app_hostnames      = [for hostname in local.hostnames : "chat.${hostname}"]
   grafana_hostnames       = [for hostname in local.hostnames : "grafana.${hostname}"]
-  jaeger_hostnames        = [for hostname in local.hostnames : "jaeger.${hostname}"]
   prometheus_hostnames    = [for hostname in local.hostnames : "prometheus.${hostname}"]
 }
 
@@ -81,7 +80,6 @@ module "tools" {
   node_hostnames_internal  = local.node_hostnames_internal
   chat_app_hostnames       = local.chat_app_hostnames
   grafana_hostnames        = local.grafana_hostnames
-  jaeger_hostnames         = local.jaeger_hostnames
   prometheus_hostnames     = local.prometheus_hostnames
   e2e_replicas             = var.e2e_replicas
 }

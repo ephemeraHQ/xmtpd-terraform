@@ -12,7 +12,6 @@ locals {
   node_hostnames          = flatten([for node in var.nodes : [for hostname in var.hostnames : "${node.name}.${hostname}"]])
   chat_app_hostnames      = [for hostname in var.hostnames : "chat.${hostname}"]
   grafana_hostnames       = [for hostname in var.hostnames : "grafana.${hostname}"]
-  jaeger_hostnames        = [for hostname in var.hostnames : "jaeger.${hostname}"]
   prometheus_hostnames    = [for hostname in var.hostnames : "prometheus.${hostname}"]
 }
 
@@ -87,7 +86,6 @@ module "tools" {
   node_hostnames_internal  = local.node_hostnames_internal
   chat_app_hostnames       = local.chat_app_hostnames
   grafana_hostnames        = local.grafana_hostnames
-  jaeger_hostnames         = local.jaeger_hostnames
   prometheus_hostnames     = local.prometheus_hostnames
   datadog_api_key          = var.datadog_api_key
   datadog_cluster_name     = var.datadog_cluster_name

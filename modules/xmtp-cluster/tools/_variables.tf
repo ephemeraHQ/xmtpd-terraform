@@ -10,7 +10,6 @@ variable "datadog_cluster_name" { default = "" }
 variable "node_hostnames_internal" { type = list(string) }
 variable "chat_app_hostnames" { type = list(string) }
 variable "grafana_hostnames" { type = list(string) }
-variable "jaeger_hostnames" { type = list(string) }
 variable "prometheus_hostnames" { type = list(string) }
 variable "node_admin_port" { type = number }
 variable "node_container_port" { type = number }
