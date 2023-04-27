@@ -44,19 +44,6 @@ resource "helm_release" "grafana" {
             url: http://${local.prometheus_server_endpoint}
             editable: true
             isDefault: true
-            jsonData:
-              exemplarTraceIdDestinations:
-                - datasourceUid: xmtpd-traces
-                  name: trace_id
-                - url: ${local.jaegar_public_url}/jaeger/ui/trace/$${__value.raw}
-                  name: trace_id
-                  urlDisplayLabel: View in Jaeger UI
-          - name: Jaeger
-            uid: xmtpd-traces
-            type: jaeger
-            url: http://${local.jaeger_query_endpoint}/jaeger/ui
-            editable: true
-            isDefault: false
       ${indent(6, file("${path.module}/grafana/dashboards-helm-values.yaml"))}
     EOF
   ]

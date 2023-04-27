@@ -1,6 +1,5 @@
 locals {
   prometheus_server_endpoint = "prometheus-server:80"
-  prometheus_server_url      = "http://${local.prometheus_server_endpoint}"
   node_admin_endpoints       = [for node in var.node_hostnames_internal : "${node}:${var.node_admin_port}"]
 }
 
