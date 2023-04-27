@@ -17,6 +17,9 @@ resource "helm_release" "datadog-agent" {
       logs:
         enabled: true
         containerCollectAll: true
+    clusterAgent:
+      nodeSelector:
+        ${var.node_pool_label_key}: ${var.node_pool}
     EOT
   ]
 }
