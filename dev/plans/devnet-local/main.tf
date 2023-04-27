@@ -3,7 +3,7 @@ module "cluster" {
 
   name_prefix          = "xmtp-devnet"
   node_container_image = "xmtp/xmtpd:latest"
-  enable_chat_app      = false
+  enable_chat_app      = true
   enable_monitoring    = true
   ingress_http_port    = 80
   ingress_https_port   = 443
