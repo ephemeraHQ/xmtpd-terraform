@@ -1,6 +1,5 @@
 locals {
   prometheus_server_endpoint = "prometheus-server:80"
-  node_admin_endpoints       = [for node in var.node_hostnames_internal : "${node}:${var.node_admin_port}"]
 }
 
 resource "helm_release" "prometheus" {
@@ -38,8 +37,15 @@ resource "helm_release" "prometheus" {
           node-pool: ${var.node_pool}
       extraScrapeConfigs: |
         - job_name: xmtpd
-          static_configs:
-          - targets: ${jsonencode(local.node_admin_endpoints)}
+          kubernetes_sd_configs:
+          - role: pod
+            selectors:
+            - role: pod
+              label: "app.kubernetes.io/part-of=xmtp-nodes"
+          relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_container_port_name]
+            action: keep
+            regex: admin
     EOF
   ]
 }
