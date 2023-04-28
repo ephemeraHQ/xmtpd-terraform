@@ -82,7 +82,6 @@ module "tools" {
   enable_e2e               = var.enable_e2e
   public_api_url           = "https://${var.hostnames[0]}"
   node_container_port      = local.node_api_http_port
-  node_admin_port          = local.node_admin_port
   node_hostnames_internal  = local.node_hostnames_internal
   chat_app_hostnames       = local.chat_app_hostnames
   grafana_hostnames        = local.grafana_hostnames
