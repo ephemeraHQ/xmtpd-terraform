@@ -76,6 +76,14 @@ variable "nodes_node_pool_instance_type" {
   default = "t3.small"
 }
 
+variable "system_node_pool_desired_size" {
+  default = 2
+}
+
+variable "nodes_node_pool_desired_size" {
+  default = 2
+}
+
 variable "container_storage_request" { default = "1Gi" }
 variable "container_cpu_request" { default = "100m" }
 variable "container_memory_request" { default = "400Mi" }
