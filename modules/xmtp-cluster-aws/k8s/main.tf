@@ -115,7 +115,5 @@ module "eks_node_group" {
   # Prevent the node groups from being created before the Kubernetes aws-auth ConfigMap
   module_depends_on = module.eks_cluster.kubernetes_config_map_id
 
-  lifecycle {
-    create_before_destroy = true
-  }
+  create_before_destroy = true
 }

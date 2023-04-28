@@ -22,6 +22,9 @@ variable "node_api_http_port" { type = number }
 variable "storage_class_name" {}
 variable "container_storage_request" {}
 variable "container_cpu_request" {}
+variable "container_memory_request" {}
+variable "container_cpu_limit" {}
+variable "container_memory_limit" {}
 variable "one_instance_per_k8s_node" { type = bool }
 variable "debug" { type = bool }
 variable "admin_port" { type = number }

@@ -25,6 +25,9 @@ module "nodes_group1" {
   storage_class_name        = var.storage_class_name
   storage_request           = var.container_storage_request
   cpu_request               = var.container_cpu_request
+  memory_request            = var.container_memory_request
+  cpu_limit                 = var.container_cpu_limit
+  memory_limit              = var.container_memory_limit
   hostnames                 = [for hostname in var.hostnames : "${local.nodes_group1[count.index].name}.${hostname}"]
   p2p_port                  = 9000
   api_grpc_port             = 5000
@@ -52,6 +55,9 @@ module "nodes_group2" {
   storage_class_name        = var.storage_class_name
   storage_request           = var.container_storage_request
   cpu_request               = var.container_cpu_request
+  memory_request            = var.container_memory_request
+  cpu_limit                 = var.container_cpu_limit
+  memory_limit              = var.container_memory_limit
   hostnames                 = [for hostname in var.hostnames : "${local.nodes_group2[count.index].name}.${hostname}"]
   p2p_port                  = 9000
   api_grpc_port             = 5000

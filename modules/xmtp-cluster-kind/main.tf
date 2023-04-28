@@ -98,8 +98,11 @@ module "nodes" {
   hostnames                 = local.hostnames
   node_api_http_port        = local.node_api_http_port
   storage_class_name        = "standard"
-  container_storage_request = "1Gi"
-  container_cpu_request     = "10m"
+  container_storage_request = var.container_storage_request
+  container_cpu_request     = var.container_cpu_request
+  container_memory_request  = var.container_memory_request
+  container_cpu_limit       = var.container_cpu_limit
+  container_memory_limit    = var.container_memory_limit
   debug                     = true
   wait_for_ready            = false
   one_instance_per_k8s_node = false

@@ -7,6 +7,9 @@ variable "hostnames" { type = list(string) }
 variable "storage_class_name" {}
 variable "storage_request" {}
 variable "cpu_request" {}
+variable "memory_request" {}
+variable "cpu_limit" {}
+variable "memory_limit" {}
 variable "p2p_port" { type = number }
 variable "api_http_port" { type = number }
 variable "api_grpc_port" { type = number }
