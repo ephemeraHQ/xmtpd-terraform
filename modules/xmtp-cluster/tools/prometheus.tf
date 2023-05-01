@@ -25,16 +25,12 @@ resource "helm_release" "prometheus" {
           scrape_interval: 10s
           scrape_timeout: 5s
       alertmanager:
-        persistence:
-          enabled: false
-        nodeSelector:
-          node-pool: ${var.node_pool}
+        enabled: false
       kube-state-metrics:
         nodeSelector:
           node-pool: ${var.node_pool}
       prometheus-pushgateway:
-        nodeSelector:
-          node-pool: ${var.node_pool}
+        enabled: false
       extraScrapeConfigs: |
         - job_name: xmtpd
           kubernetes_sd_configs:
