@@ -85,8 +85,8 @@ variable "nodes_node_pool_desired_size" {
   default = 2
 }
 
-variable "container_storage_request" { default = "1Gi" }
-variable "container_cpu_request" { default = "100m" }
-variable "container_memory_request" { default = "400Mi" }
-variable "container_cpu_limit" { default = "1000m" }
-variable "container_memory_limit" { default = "800Mi" }
+variable "node_container_storage_request" { default = "1Gi" }
+variable "node_container_cpu_request" { default = "100m" }
+variable "node_container_memory_request" { default = "400Mi" }
+variable "node_container_cpu_limit" { default = "1000m" }
+variable "node_container_memory_limit" { default = "800Mi" }
