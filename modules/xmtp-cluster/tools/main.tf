@@ -32,4 +32,5 @@ module "e2e" {
   container_image       = var.e2e_container_image
   replicas              = var.e2e_replicas
   delay                 = var.e2e_delay
+  admin_port            = var.e2e_admin_port
 }

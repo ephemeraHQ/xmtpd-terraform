@@ -707,6 +707,281 @@
         "x": 12,
         "y": 15
       },
+      "id": 44,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "histogram_quantile(0.5, sum(rate(xmtpd_api_request_duration_us_bucket{grpc_method=\"Query\"}[$__rate_interval])) by (le, kube_app_name))",
+          "instant": false,
+          "legendFormat": "{{kube_app_name}}/p50",
+          "range": true,
+          "refId": "p50"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "xmtpd-metrics"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "histogram_quantile(0.99, sum(rate(xmtpd_api_request_duration_us_bucket{grpc_method=\"Query\"}[$__rate_interval])) by (le, kube_app_name))",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{kube_app_name}}/p99",
+          "range": true,
+          "refId": "p99"
+        }
+      ],
+      "title": "Query API request durations by node",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "id": 43,
+      "panels": [],
+      "title": "E2E",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "xmtpd-metrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "failed"
+            },
+            "properties": [
+              {
+                "id": "custom.drawStyle",
+                "value": "line"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 4
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "id": 41,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "xmtpd-metrics"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(xmtpd_e2e_run_duration_us_count{status=\"passed\"}[$__rate_interval])) by (test)",
+          "legendFormat": "{{test}}/passed",
+          "range": true,
+          "refId": "passed"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "xmtpd-metrics"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(xmtpd_e2e_run_duration_us_count{status=\"failed\"}[$__rate_interval])) by (test) != 0",
+          "hide": false,
+          "legendFormat": "{{test}}/failed",
+          "range": true,
+          "refId": "failed"
+        }
+      ],
+      "title": "E2E test runs per second",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "xmtpd-metrics"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 2000
+              }
+            ]
+          },
+          "unit": "µs"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "p99"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    5,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-BlPu"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
       "id": 27,
       "options": {
         "legend": {
@@ -725,9 +1000,9 @@
           "datasource": "Prometheus",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "histogram_quantile(0.5, sum(rate(xmtpd_api_request_duration_us_bucket{grpc_method=\"Publish\"}[$__rate_interval])) by (le, kube_app_name))",
+          "expr": "histogram_quantile(0.5, sum(rate(xmtpd_e2e_run_duration_us_bucket{}[$__rate_interval])) by (le, test, status))",
           "instant": false,
-          "legendFormat": "{{kube_app_name}}/p50",
+          "legendFormat": "{{test}}/{{status}}/p50",
           "range": true,
           "refId": "p50"
         },
@@ -738,17 +1013,17 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "histogram_quantile(0.99, sum(rate(xmtpd_api_request_duration_us_bucket{grpc_method=\"Publish\"}[$__rate_interval])) by (le, kube_app_name))",
+          "expr": "histogram_quantile(0.99, sum(rate(xmtpd_e2e_run_duration_us_bucket{}[$__rate_interval])) by (le, test, status))",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "",
-          "legendFormat": "{{kube_app_name}}/p99",
+          "legendFormat": "{{test}}/{{status}}/p99",
           "range": true,
           "refId": "p99"
         }
       ],
-      "title": "Publish API request durations by node",
+      "title": "E2E test run durations",
       "type": "timeseries"
     },
     {
@@ -757,7 +1032,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 32
       },
       "id": 26,
       "panels": [],
@@ -825,7 +1100,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 24
+        "y": 33
       },
       "id": 24,
       "options": {
@@ -917,7 +1192,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 33
       },
       "id": 29,
       "options": {
@@ -1036,7 +1311,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 32
+        "y": 41
       },
       "id": 28,
       "options": {
@@ -1170,7 +1445,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 32
+        "y": 41
       },
       "id": 17,
       "options": {
@@ -1217,13 +1492,15 @@
       "type": "timeseries"
     },
     {
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 40
+        "y": 49
       },
       "id": 33,
+      "panels": [],
       "title": "Containers",
       "type": "row"
     },
@@ -1270,7 +1547,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 41
+        "y": 50
       },
       "id": 37,
       "options": {
@@ -1345,7 +1622,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 41
+        "y": 50
       },
       "id": 36,
       "options": {
@@ -1440,7 +1717,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 49
+        "y": 58
       },
       "id": 31,
       "options": {
@@ -1533,7 +1810,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 49
+        "y": 58
       },
       "id": 34,
       "options": {
@@ -1627,7 +1904,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 57
+        "y": 66
       },
       "id": 35,
       "options": {
@@ -1720,7 +1997,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 57
+        "y": 66
       },
       "id": 38,
       "options": {
@@ -1774,13 +2051,13 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "XMTP Cluster",
   "uid": "nhGacz54k",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }

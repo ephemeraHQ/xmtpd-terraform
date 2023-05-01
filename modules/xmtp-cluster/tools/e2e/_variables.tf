@@ -6,3 +6,4 @@ variable "container_image" {}
 variable "api_urls" { type = list(string) }
 variable "replicas" { type = number }
 variable "delay" { default = "" }
+variable "admin_port" { type = number }
