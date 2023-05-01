@@ -8,6 +8,7 @@ locals {
   hostnames               = ["localhost", "xmtp.local"]
   node_api_http_port      = 5001
   node_admin_port         = 8009
+  e2e_admin_port          = 8010
 
   name = "${var.name_prefix}-${random_string.name_suffix.result}"
 
@@ -82,6 +83,7 @@ module "tools" {
   prometheus_hostnames     = local.prometheus_hostnames
   e2e_replicas             = var.e2e_replicas
   e2e_delay                = var.e2e_delay
+  e2e_admin_port           = local.e2e_admin_port
 }
 
 module "nodes" {
