@@ -81,6 +81,7 @@ module "tools" {
   grafana_hostnames        = local.grafana_hostnames
   prometheus_hostnames     = local.prometheus_hostnames
   e2e_replicas             = var.e2e_replicas
+  e2e_delay                = var.e2e_delay
 }
 
 module "nodes" {

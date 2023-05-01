@@ -89,6 +89,7 @@ module "tools" {
   datadog_api_key          = var.datadog_api_key
   datadog_cluster_name     = var.datadog_cluster_name
   e2e_replicas             = var.e2e_replicas
+  e2e_delay                = var.e2e_delay
 }
 
 module "nodes" {

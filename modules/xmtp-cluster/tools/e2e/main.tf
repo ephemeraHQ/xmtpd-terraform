@@ -28,7 +28,8 @@ resource "kubernetes_deployment" "deployment" {
           image = var.container_image
           command = concat(
             ["xmtpd-e2e", "--continuous"],
-            [for api_url in var.api_urls : "--api-url=${api_url}"]
+            var.delay != "" ? ["--delay=${var.delay}"] : [],
+            [for api_url in var.api_urls : "--api-url=${api_url}"],
           )
         }
       }

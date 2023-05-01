@@ -17,3 +17,4 @@ variable "chat_app_container_image" {}
 variable "enable_e2e" { type = bool }
 variable "e2e_container_image" {}
 variable "e2e_replicas" { type = number }
+variable "e2e_delay" { default = "" }

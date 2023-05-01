@@ -23,6 +23,7 @@ variable "ingress_https_port" {}
 variable "enable_e2e" { default = true }
 variable "e2e_container_image" { default = "xmtp/xmtpd-e2e:latest" }
 variable "e2e_replicas" { default = 1 }
+variable "e2e_delay" { default = "" }
 variable "container_storage_request" { default = "1Gi" }
 variable "container_cpu_request" { default = "100m" }
 variable "container_memory_request" { default = "400Mi" }
