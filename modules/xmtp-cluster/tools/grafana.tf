@@ -6,8 +6,7 @@ resource "kubernetes_config_map" "xmtp-dashboards" {
     namespace = local.namespace
   }
   data = {
-    "xmtp-network-api.json"  = file("${path.module}/grafana/dashboards/xmtp-network-api.json")
-    "xmtp-network-crdt.json" = file("${path.module}/grafana/dashboards/xmtp-network-crdt.json")
+    "xmtp-cluster.json" = file("${path.module}/grafana/dashboards/xmtp-cluster.json")
   }
 }
 

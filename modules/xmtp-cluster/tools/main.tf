@@ -31,4 +31,5 @@ module "e2e" {
   api_urls              = [for hostname in var.node_hostnames_internal : "http://${hostname}:${var.node_container_port}"]
   container_image       = var.e2e_container_image
   replicas              = var.e2e_replicas
+  delay                 = var.e2e_delay
 }

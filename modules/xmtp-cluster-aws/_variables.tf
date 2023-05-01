@@ -57,6 +57,7 @@ variable "datadog_cluster_name" { default = "" }
 variable "enable_e2e" { default = true }
 variable "e2e_container_image" { default = "xmtp/xmtpd-e2e:latest" }
 variable "e2e_replicas" { default = 1 }
+variable "e2e_delay" { default = "" }
 
 variable "eks_map_additional_iam_users" {
   type = list(object({
@@ -84,8 +85,8 @@ variable "nodes_node_pool_desired_size" {
   default = 2
 }
 
-variable "container_storage_request" { default = "1Gi" }
-variable "container_cpu_request" { default = "100m" }
-variable "container_memory_request" { default = "400Mi" }
-variable "container_cpu_limit" { default = "1000m" }
-variable "container_memory_limit" { default = "800Mi" }
+variable "node_container_storage_request" { default = "1Gi" }
+variable "node_container_cpu_request" { default = "100m" }
+variable "node_container_memory_request" { default = "400Mi" }
+variable "node_container_cpu_limit" { default = "1000m" }
+variable "node_container_memory_limit" { default = "800Mi" }

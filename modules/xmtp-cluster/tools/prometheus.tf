@@ -46,6 +46,15 @@ resource "helm_release" "prometheus" {
           - source_labels: [__meta_kubernetes_pod_container_port_name]
             action: keep
             regex: admin
+          - source_labels: [__meta_kubernetes_namespace]
+            action: replace
+            target_label: kube_namespace
+          - source_labels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+            action: replace
+            target_label: kube_app_name
+          - source_labels: [__meta_kubernetes_pod_label_app_kubernetes_io_part_of]
+            action: replace
+            target_label: kube_app_part_of
     EOF
   ]
 }
