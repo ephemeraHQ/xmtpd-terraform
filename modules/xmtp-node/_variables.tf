@@ -14,6 +14,7 @@ variable "p2p_port" { type = number }
 variable "api_http_port" { type = number }
 variable "api_grpc_port" { type = number }
 variable "admin_port" { type = number }
+variable "topic_reaper_period" { type = string }
 variable "node_pool_label_key" {}
 variable "node_pool" {}
 variable "one_instance_per_k8s_node" { type = bool }

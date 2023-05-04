@@ -33,6 +33,7 @@ module "nodes_group1" {
   api_grpc_port             = 5000
   api_http_port             = 5001
   admin_port                = var.admin_port
+  topic_reaper_period = var.topic_reaper_period
   node_pool_label_key       = var.node_pool_label_key
   node_pool                 = var.node_pool
   one_instance_per_k8s_node = var.one_instance_per_k8s_node
@@ -63,6 +64,7 @@ module "nodes_group2" {
   api_grpc_port             = 5000
   api_http_port             = 5001
   admin_port                = var.admin_port
+  topic_reaper_period = var.topic_reaper_period
   node_pool_label_key       = var.node_pool_label_key
   node_pool                 = var.node_pool
   one_instance_per_k8s_node = var.one_instance_per_k8s_node

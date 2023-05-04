@@ -28,3 +28,4 @@ variable "container_memory_limit" {}
 variable "one_instance_per_k8s_node" { type = bool }
 variable "debug" { type = bool }
 variable "admin_port" { type = number }
+variable "topic_reaper_period" { type = string }

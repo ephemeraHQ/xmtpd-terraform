@@ -173,6 +173,7 @@ resource "kubernetes_stateful_set" "statefulset" {
               "--api.grpc-port=${var.api_grpc_port}",
               "--admin.port=${var.admin_port}",
               "--store.type=${var.store_type}",
+              "--topic-reaper-period=${var.topic_reaper_period}",
             ],
             [for peer in var.p2p_persistent_peers : "--p2p.persistent-peer=${peer}"],
             var.debug ? ["--log.level=debug"] : [],
