@@ -9,7 +9,7 @@ locals {
   node_api_http_port      = 5001
   node_admin_port         = 8009
   e2e_admin_port          = 8010
-  topic_reaper_period = "2m"
+  topic_reaper_period     = "2m"
 
   name = "${var.name_prefix}-${random_string.name_suffix.result}"
 
@@ -110,5 +110,5 @@ module "nodes" {
   wait_for_ready            = false
   one_instance_per_k8s_node = false
   admin_port                = local.node_admin_port
-  topic_reaper_period = local.topic_reaper_period
+  topic_reaper_period       = local.topic_reaper_period
 }
