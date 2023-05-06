@@ -42,6 +42,7 @@ resource "helm_release" "traefik" {
       service:
         enabled: false
         type: ${var.ingress_service_type}
+        annotations: ${yamlencode(var.ingress_service_annotations)}
       nodeSelector:
         ${var.node_pool_label_key}: ${var.node_pool}
       providers:

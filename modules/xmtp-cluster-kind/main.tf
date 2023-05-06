@@ -53,13 +53,14 @@ module "system" {
   source     = "../xmtp-cluster/system"
   depends_on = [module.k8s]
 
-  namespace               = "xmtp-system"
-  node_pool_label_key     = local.node_pool_label_key
-  node_pool               = local.system_node_pool
-  cluster_http_node_port  = local.cluster_http_node_port
-  cluster_https_node_port = local.cluster_https_node_port
-  ingress_class_name      = local.ingress_class_name
-  ingress_service_type    = "NodePort"
+  namespace                   = "xmtp-system"
+  node_pool_label_key         = local.node_pool_label_key
+  node_pool                   = local.system_node_pool
+  cluster_http_node_port      = local.cluster_http_node_port
+  cluster_https_node_port     = local.cluster_https_node_port
+  ingress_class_name          = local.ingress_class_name
+  ingress_service_type        = "NodePort"
+  ingress_service_annotations = {}
 }
 
 module "tools" {
