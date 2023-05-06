@@ -106,7 +106,7 @@ module "nodes" {
   container_memory_request  = var.node_container_memory_request
   container_cpu_limit       = var.node_container_cpu_limit
   container_memory_limit    = var.node_container_memory_limit
-  debug                     = true
+  debug                     = var.debug
   wait_for_ready            = false
   one_instance_per_k8s_node = false
   admin_port                = local.node_admin_port
