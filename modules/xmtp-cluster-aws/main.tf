@@ -66,6 +66,9 @@ module "system" {
   node_pool            = local.system_node_pool
   ingress_class_name   = local.ingress_class_name
   ingress_service_type = "LoadBalancer"
+  ingress_service_annotations = {
+    "service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags" = "cluster=${local.name},cluster_name=${var.datadog_cluster_name}"
+  }
 }
 
 module "tools" {

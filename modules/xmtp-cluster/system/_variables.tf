@@ -11,3 +11,4 @@ variable "cluster_https_node_port" {
 }
 variable "ingress_class_name" {}
 variable "ingress_service_type" {}
+variable "ingress_service_annotations" { type = map(string) }
