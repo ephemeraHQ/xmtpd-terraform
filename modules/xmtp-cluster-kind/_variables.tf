@@ -29,3 +29,4 @@ variable "node_container_cpu_request" { default = "100m" }
 variable "node_container_memory_request" { default = "400Mi" }
 variable "node_container_cpu_limit" { default = "1000m" }
 variable "node_container_memory_limit" { default = "800Mi" }
+variable "debug" { default = false }
